@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Alumnos{% endblock %}
+{% block page_title %}Gestión de Alumnos{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <form method="get" class="d-flex" style="max-width:400px;">
+            <input type="text"
+                   name="q"
+                   value="{{ query }}"
+                   class="form-control me-2"
+                   placeholder="Buscar alumno...">
+            <button class="btn btn-outline-primary">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <a href="{% url 'alumno:create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nuevo Alumno
+        </a>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Género</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Activo</th>
+                    <th width="140">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for alumno in alumnos %}
+
+                <tr>
+                    <td>{{ alumno.id }}</td>
+
+                    <td>
+                        <strong>
+                            {{ alumno.first_name }} {{ alumno.last_name }}
+                        </strong>
+                    </td>
+
+                    <td>{{ alumno.email }}</td>
+
+                    <td>{{ alumno.phone }}</td>
+
+                    <td>
+                        {% if alumno.gender == "M" %}
+                            Masculino
+                        {% elif alumno.gender == "F" %}
+                            Femenino
+                        {% else %}
+                            {{ alumno.gender }}
+                        {% endif %}
+                    </td>
+
+                    <td>{{ alumno.birth_date }}</td>
+
+                    <td>
+                        {% if alumno.is_active %}
+                            <span class="badge bg-success">Activo</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactivo</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'alumno:detail' alumno.id %}"
+                           class="btn btn-sm btn-outline-info">
+                           <i class="bi bi-eye"></i>
+                        </a>
+
+                        <a href="{% url 'alumno:edit' alumno.id %}"
+                           class="btn btn-sm btn-outline-warning">
+                           <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <a href="{% url 'alumno:delete' alumno.id %}"
+                           class="btn btn-sm btn-outline-danger">
+                           <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+                    <td colspan="8" class="text-center p-4 text-muted">
+                        <i class="bi bi-people fs-4"></i><br>
+                        No hay alumnos registrados
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
