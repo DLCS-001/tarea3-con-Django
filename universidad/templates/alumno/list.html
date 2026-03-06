@@ -9,19 +9,22 @@
 
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
+        <!-- Buscador -->
         <form method="get" class="d-flex" style="max-width:400px;">
             <input type="text"
                    name="q"
                    value="{{ query }}"
                    class="form-control me-2"
-                   placeholder="Buscar alumno...">
+                   placeholder="Buscar alumno por nombre o email...">
+
             <button class="btn btn-outline-primary">
                 <i class="bi bi-search"></i>
             </button>
         </form>
 
+        <!-- Botón nuevo -->
         <a href="{% url 'alumno:create' %}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Nuevo Alumno
+            <i class="bi bi-person-plus-fill"></i> Nuevo Alumno
         </a>
 
     </div>
@@ -33,13 +36,13 @@
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Alumno</th>
                     <th>Email</th>
                     <th>Teléfono</th>
                     <th>Género</th>
                     <th>Fecha Nacimiento</th>
                     <th>Activo</th>
-                    <th width="140">Acciones</th>
+                    <th width="150">Acciones</th>
                 </tr>
             </thead>
 
@@ -48,17 +51,22 @@
             {% for alumno in alumnos %}
 
                 <tr>
+
                     <td>{{ alumno.id }}</td>
 
                     <td>
-                        <strong>
-                            {{ alumno.first_name }} {{ alumno.last_name }}
-                        </strong>
+                        <strong>{{ alumno.first_name }} {{ alumno.last_name }}</strong>
                     </td>
 
                     <td>{{ alumno.email }}</td>
 
-                    <td>{{ alumno.phone }}</td>
+                    <td>
+                        {% if alumno.phone %}
+                            {{ alumno.phone }}
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
 
                     <td>
                         {% if alumno.gender == "M" %}
@@ -84,17 +92,17 @@
 
                         <a href="{% url 'alumno:detail' alumno.id %}"
                            class="btn btn-sm btn-outline-info">
-                           <i class="bi bi-eye"></i>
+                            <i class="bi bi-eye"></i>
                         </a>
 
                         <a href="{% url 'alumno:edit' alumno.id %}"
                            class="btn btn-sm btn-outline-warning">
-                           <i class="bi bi-pencil"></i>
+                            <i class="bi bi-pencil"></i>
                         </a>
 
                         <a href="{% url 'alumno:delete' alumno.id %}"
                            class="btn btn-sm btn-outline-danger">
-                           <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash"></i>
                         </a>
 
                     </td>
@@ -105,7 +113,8 @@
 
                 <tr>
                     <td colspan="8" class="text-center p-4 text-muted">
-                        <i class="bi bi-people fs-4"></i><br>
+                        <i class="bi bi-people fs-3"></i>
+                        <br>
                         No hay alumnos registrados
                     </td>
                 </tr>
