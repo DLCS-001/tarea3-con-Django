@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}JP University - Eliminar Curso{% endblock %}
+
+{% block page_title %}Eliminar Curso{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 border-danger">
+                <div class="card-header bg-danger text-white py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Confirmar Eliminación
+                    </h5>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-journal-bookmark-fill text-danger" style="font-size: 4rem;"></i>
+                    <h4 class="mt-3">¿Estás seguro?</h4>
+                    <p class="text-muted mb-4">
+                        Vas a eliminar el curso:
+                    </p>
+                    <p class="h5 mb-4">
+                        <span class="badge bg-primary me-2">{{ curso.codigo }}</span>
+                        <strong>{{ curso.nombre }}</strong>
+                    </p>
+                    
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        Esta acción no se puede deshacer.
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{% url 'curso:list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-circle me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash-fill me-2"></i>Sí, eliminar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

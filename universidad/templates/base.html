@@ -182,7 +182,8 @@
     </a>
 
     <!-- Módulos futuros -->
-    <a href="#" class="nav-link">
+    </a>
+    <a href="{% url 'curso:list' %}" class="nav-link {% if request.resolver_match.namespace == 'curso' %}active{% endif %}">
         <i class="bi bi-journal-bookmark-fill"></i> Cursos
     </a>
     <a href="#" class="nav-link">

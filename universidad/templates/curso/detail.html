@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}JP University - Detalle del Curso{% endblock %}
+
+{% block page_title %}Detalle del Curso{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-journal-bookmark-fill me-2"></i>
+                            Información del Curso
+                        </h5>
+                        <span class="badge {% if curso.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                            {{ curso.is_active|yesno:"Activo,Inactivo" }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="fw-bold text-muted small">CÓDIGO</label>
+                            <p class="h5">{{ curso.codigo }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="fw-bold text-muted small">CRÉDITOS</label>
+                            <p class="h5">{{ curso.creditos }} crédito{{ curso.creditos|pluralize }}</p>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="fw-bold text-muted small">NOMBRE DEL CURSO</label>
+                            <p class="h4">{{ curso.nombre }}</p>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="fw-bold text-muted small">DESCRIPCIÓN</label>
+                            <p class="lead">
+                                {% if curso.descripcion %}
+                                    {{ curso.descripcion|linebreaks }}
+                                {% else %}
+                                    <span class="text-muted fst-italic">No hay descripción disponible</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white py-3">
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'curso:list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Volver
+                        </a>
+                        <a href="{% url 'curso:edit' curso.pk %}" class="btn btn-warning">
+                            <i class="bi bi-pencil me-2"></i>Editar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

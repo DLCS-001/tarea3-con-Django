@@ -11,7 +11,7 @@ class Curso(models.Model):
         return f"{self.codigo} - {self.nombre}"
 
     class Meta:
-        db_table = 'curso'
+        db_table = 'cursos_universidad'
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos'
         ordering = ['codigo']
