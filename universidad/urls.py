@@ -27,4 +27,5 @@ path('', views.dashboard, name='dashboard'),
     path('admin/', admin.site.urls),
     path('alumnos/', include('universidad.Models.Alumno.urls')),
 path('cursos/', include('universidad.Models.Curso.urls')),
+path('catedraticos/', include('universidad.Models.Catedratico.urls')),
 ]

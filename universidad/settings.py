@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'universidad.Models.Alumno',
     'universidad.Models.Curso',
+    'universidad.Models.Catedratico',
     'core'
 ]
 

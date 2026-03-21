@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Catedrático{% endblock %}
+{% block page_title %}Detalle de Catedrático{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0" style="max-width:750px;">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">
+            <i class="bi bi-person-badge-fill"></i>
+            {{ catedratico.nombre }} {{ catedratico.apellido }}
+        </h6>
+        <div>
+            <a href="{% url 'catedratico:edit' catedratico.id %}" class="btn btn-sm btn-outline-warning">
+                <i class="bi bi-pencil"></i> Editar
+            </a>
+            <a href="{% url 'catedratico:delete' catedratico.id %}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i> Eliminar
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-borderless align-middle mb-0">
+            <tr>
+                <th style="width:200px;">ID</th>
+                <td>{{ catedratico.id }}</td>
+            </tr>
+            <tr>
+                <th>Código</th>
+                <td><span class="badge bg-primary">{{ catedratico.codigo }}</span></td>
+            </tr>
+            <tr>
+                <th>Nombre Completo</th>
+                <td>{{ catedratico.nombre }} {{ catedratico.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ catedratico.email }}</td>
+            </tr>
+            <tr>
+                <th>Teléfono</th>
+                <td>
+                    {% if catedratico.telefono %}
+                        {{ catedratico.telefono }}
+                    {% else %}
+                        <span class="text-muted">No registrado</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Especialidad</th>
+                <td>
+                    {% if catedratico.especialidad %}
+                        {{ catedratico.especialidad }}
+                    {% else %}
+                        <span class="text-muted">No especificada</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Fecha de registro</th>
+                <td>{{ catedratico.created_at|date:"d/m/Y H:i" }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>
+                    {% if catedratico.is_active %}
+                        <span class="badge bg-success">Activo</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inactivo</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="card-footer bg-white d-flex justify-content-between">
+        <a href="{% url 'catedratico:list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Volver
+        </a>
+        <a href="{% url 'catedratico:edit' catedratico.id %}" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i>
+            Editar catedrático
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
