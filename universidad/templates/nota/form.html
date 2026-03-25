@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clipboard2-check-fill me-2"></i>
+                        {{ title }}
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row g-3">
+                            <!-- Alumno -->
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.alumno.id_for_label }}" class="form-label">
+                                    {{ form.alumno.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.alumno }}
+                                {% if form.alumno.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.alumno.errors.0 }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Curso -->
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.curso.id_for_label }}" class="form-label">
+                                    {{ form.curso.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.curso }}
+                                {% if form.curso.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.curso.errors.0 }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-12">
+                                <hr>
+                                <h6 class="mb-3">Calificaciones Parciales</h6>
+                            </div>
+                            
+                            <!-- Nota 1 -->
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ form.nota1.id_for_label }}" class="form-label">
+                                    {{ form.nota1.label }}
+                                </label>
+                                {{ form.nota1 }}
+                                {% if form.nota1.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.nota1.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">Primera evaluación (0-100)</div>
+                            </div>
+                            
+                            <!-- Nota 2 -->
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ form.nota2.id_for_label }}" class="form-label">
+                                    {{ form.nota2.label }}
+                                </label>
+                                {{ form.nota2 }}
+                                {% if form.nota2.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.nota2.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">Segunda evaluación (0-100)</div>
+                            </div>
+                            
+                            <!-- Nota 3 -->
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ form.nota3.id_for_label }}" class="form-label">
+                                    {{ form.nota3.label }}
+                                </label>
+                                {{ form.nota3 }}
+                                {% if form.nota3.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.nota3.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">Tercera evaluación (0-100)</div>
+                            </div>
+                            
+                            <!-- Examen Final -->
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ form.examen_final.id_for_label }}" class="form-label">
+                                    {{ form.examen_final.label }}
+                                </label>
+                                {{ form.examen_final }}
+                                {% if form.examen_final.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.examen_final.errors.0 }}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">Nota del examen final (0-100)</div>
+                            </div>
+                            
+                            <!-- Información de cálculo -->
+                            {% if nota %}
+                            <div class="col-12">
+                                <div class="alert alert-info mt-3">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    <strong>Información de cálculo:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li><strong>Zona:</strong> {{ nota.zona|default:"No calculada aún" }}</li>
+                                        <li><strong>Nota Final:</strong> {{ nota.nota_final|default:"No calculada aún" }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="d-flex justify-content-between gap-2">
+                            <a href="{% url 'nota:list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>{{ button_text|default:"Guardar Calificación" }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

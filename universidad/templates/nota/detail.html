@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Calificación - JP University{% endblock %}
+{% block page_title %}Detalle de Calificación{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clipboard2-check-fill me-2"></i>
+                            Detalle de Calificación
+                        </h5>
+                        <div>
+                            <a href="{% url 'nota:edit' nota.pk %}" class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a href="{% url 'nota:delete' nota.pk %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="fw-bold text-muted small">ALUMNO</label>
+                            <p class="h5">{{ nota.alumno.first_name }} {{ nota.alumno.last_name }}</p>
+                            <p class="text-muted mb-0">{{ nota.alumno.email }}</p>
+                            <p class="text-muted">{{ nota.alumno.carnet }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="fw-bold text-muted small">CURSO</label>
+                            <p class="h5">{{ nota.curso.nombre }}</p>
+                            <p class="text-muted mb-0">Código: {{ nota.curso.codigo }}</p>
+                            <p class="text-muted">Créditos: {{ nota.curso.creditos }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 text-center mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Nota 1</h6>
+                                    <h3 class="mb-0 {% if nota.nota1 and nota.nota1 >= 60 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ nota.nota1|default:"—" }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Nota 2</h6>
+                                    <h3 class="mb-0 {% if nota.nota2 and nota.nota2 >= 60 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ nota.nota2|default:"—" }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Nota 3</h6>
+                                    <h3 class="mb-0 {% if nota.nota3 and nota.nota3 >= 60 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ nota.nota3|default:"—" }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Examen Final</h6>
+                                    <h3 class="mb-0 {% if nota.examen_final and nota.examen_final >= 60 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ nota.examen_final|default:"—" }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 text-center">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h6 class="text-white-50">Zona</h6>
+                                    <h2 class="mb-0">{{ nota.zona|default:"—" }}</h2>
+                                    <small>Promedio de calificaciones parciales</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div class="card {% if nota.nota_final and nota.nota_final >= 61 %}bg-success{% elif nota.nota_final and nota.nota_final >= 51 %}bg-warning{% else %}bg-danger{% endif %} text-white">
+                                <div class="card-body">
+                                    <h6 class="text-white-50">Calificación Final</h6>
+                                    <h2 class="mb-0">{{ nota.nota_final|default:"—" }}</h2>
+                                    <small>
+                                        {% if nota.nota_final %}
+                                            {% if nota.nota_final >= 61 %}
+                                                Aprobado
+                                            {% elif nota.nota_final >= 51 %}
+                                                Pendiente
+                                            {% else %}
+                                                Reprobado
+                                            {% endif %}
+                                        {% endif %}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="mt-4">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted small">FECHA DE REGISTRO</label>
+                            <p>{{ nota.created_at|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted small">ÚLTIMA ACTUALIZACIÓN</label>
+                            <p>{{ nota.updated_at|date:"d/m/Y H:i" }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white py-3">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'nota:list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Volver al listado
+                        </a>
+                        <div>
+                            <a href="{% url 'nota:edit' nota.pk %}" class="btn btn-warning">
+                                <i class="bi bi-pencil me-2"></i>Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

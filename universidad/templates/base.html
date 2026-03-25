@@ -187,9 +187,12 @@
     <a href="{% url 'curso:list' %}" class="nav-link {% if request.resolver_match.namespace == 'curso' %}active{% endif %}">
         <i class="bi bi-journal-bookmark-fill"></i> Cursos
     </a>
-    <a href="#" class="nav-link">
-        <i class="bi bi-clipboard2-check-fill"></i> Calificaciones
-    </a>
+
+   <a href="{% url 'nota:list' %}"
+   class="nav-link {% if request.resolver_match.namespace == 'nota' %}active{% endif %}">
+    <i class="bi bi-clipboard2-check-fill"></i> Calificaciones
+</a>
+
 
 <a href="{% url 'catedratico:list' %}" class="nav-link {% if request.resolver_match.namespace == 'catedratico' %}active{% endif %}">
     <i class="bi bi-person-badge-fill"></i> Catedráticos
