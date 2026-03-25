@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Asignaciones de Cursos - JP University{% endblock %}
+{% block page_title %}Asignaciones de Cursos{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h4 mb-0">
+            <i class="bi bi-calendar-check-fill me-2"></i>
+            Asignación de Catedráticos a Cursos
+        </h2>
+        <a href="{% url 'asignacioncurso:create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>
+            Nueva Asignación
+        </a>
+    </div>
+
+    <!-- Buscador -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-muted"></i>
+                        </span>
+                        <input type="text"
+                               name="q"
+                               class="form-control border-start-0 ps-0"
+                               placeholder="Buscar por curso, catedrático o sección..."
+                               value="{{ query }}">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                    {% if query %}
+                    <a href="{% url 'asignacioncurso:list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i> Limpiar
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col-auto ms-auto">
+                    <span class="text-muted small">
+                        Total: <strong>{{ total_asignaciones }}</strong> asignación{{ total_asignaciones|pluralize }}
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de asignaciones -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Curso</th>
+                            <th>Catedrático</th>
+                            <th>Año</th>
+                            <th>Semestre</th>
+                            <th>Sección</th>
+                            <th>Fecha Asignación</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </thead>
+                    <tbody>
+                        {% for asignacion in asignaciones %}
+                        <tr>
+                            <td class="ps-4">{{ forloop.counter }}</td>
+                            <td>
+                                <span class="badge bg-primary">{{ asignacion.curso.codigo }}</span>
+                                <br>
+                                <small>{{ asignacion.curso.nombre }}</small>
+                            </td>
+                            <td>
+                                <strong>{{ asignacion.catedratico.nombre }} {{ asignacion.catedratico.apellido }}</strong>
+                                <br>
+                                <small class="text-muted">{{ asignacion.catedratico.email }}</small>
+                            </td>
+                            <td>{{ asignacion.anio }}</td>
+                            <td>
+                                {% if asignacion.semestre == 1 %}
+                                    <span class="badge bg-info">1er Semestre</span>
+                                {% else %}
+                                    <span class="badge bg-success">2do Semestre</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">Sección {{ asignacion.seccion }}</span>
+                            </td>
+                            <td>{{ asignacion.created_at|date:"d/m/Y" }}</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'asignacioncurso:detail' asignacion.pk %}"
+                                       class="btn btn-outline-info"
+                                       title="Ver detalles">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    <a href="{% url 'asignacioncurso:edit' asignacion.pk %}"
+                                       class="btn btn-outline-warning"
+                                       title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="{% url 'asignacioncurso:delete' asignacion.pk %}"
+                                       class="btn btn-outline-danger"
+                                       title="Eliminar">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="py-4">
+                                    <i class="bi bi-calendar-x" style="font-size: 3rem; color: #cbd5e1;"></i>
+                                    <h5 class="mt-3 text-muted">No hay asignaciones registradas</h5>
+                                    <p class="text-muted mb-3">
+                                        {% if query %}
+                                            No se encontraron resultados para "{{ query }}"
+                                        {% else %}
+                                            Comienza asignando catedráticos a los cursos
+                                        {% endif %}
+                                    </p>
+                                    <a href="{% url 'asignacioncurso:create' %}" class="btn btn-primary">
+                                        <i class="bi bi-plus-circle me-2"></i>
+                                        Nueva Asignación
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

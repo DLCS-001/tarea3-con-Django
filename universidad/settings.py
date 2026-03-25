@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'universidad.Models.Curso',
     'universidad.Models.Catedratico',
     'universidad.Models.Nota',
+    'universidad.Models.AsignacionCurso',
     'core'
 ]
 
