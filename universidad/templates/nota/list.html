@@ -61,10 +61,10 @@
                             <th class="ps-4">#</th>
                             <th>Alumno</th>
                             <th>Curso</th>
-                            <th>Nota 1</th>
-                            <th>Nota 2</th>
-                            <th>Nota 3</th>
-                            <th>Zona</th>
+                            <th>Parcial 1</th>
+                            <th>Parcial 2</th>
+                            <th>Zona de tareas</th>
+                            <th>Total Zona</th>
                             <th>Examen Final</th>
                             <th>Nota Final</th>
                             <th class="text-end pe-4">Acciones</th>
@@ -84,50 +84,50 @@
                                 <small>{{ nota.curso.nombre }}</small>
                             </td>
                             <td>
-                                {% if nota.nota1 %}
-                                    <span class="badge {% if nota.nota1 >= 60 %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ nota.nota1 }}
+                                {% if nota.nota1 != None %}
+                                    <span class="badge bg-primary">
+                                        {{ nota.nota1 }} / 15
                                     </span>
                                 {% else %}
                                     <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if nota.nota2 %}
-                                    <span class="badge {% if nota.nota2 >= 60 %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ nota.nota2 }}
+                                {% if nota.nota2 != None %}
+                                    <span class="badge bg-primary">
+                                        {{ nota.nota2 }} / 15
                                     </span>
                                 {% else %}
                                     <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if nota.nota3 %}
-                                    <span class="badge {% if nota.nota3 >= 60 %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ nota.nota3 }}
+                                {% if nota.nota3 != None %}
+                                    <span class="badge bg-info">
+                                        {{ nota.nota3 }} / 35
                                     </span>
                                 {% else %}
                                     <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if nota.zona %}
-                                    <strong>{{ nota.zona }}</strong>
+                                {% if nota.zona != None %}
+                                    <strong>{{ nota.zona }} / 65</strong>
                                 {% else %}
                                     <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if nota.examen_final %}
-                                    <span class="badge {% if nota.examen_final >= 60 %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ nota.examen_final }}
+                                {% if nota.examen_final != None %}
+                                    <span class="badge bg-warning text-dark">
+                                        {{ nota.examen_final }} / 35
                                     </span>
                                 {% else %}
                                     <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if nota.nota_final %}
+                                {% if nota.nota_final != None %}
                                     <span class="badge {% if nota.nota_final >= 61 %}bg-success{% elif nota.nota_final >= 51 %}bg-warning{% else %}bg-danger{% endif %} fs-6">
                                         <strong>{{ nota.nota_final }}</strong>
                                     </span>

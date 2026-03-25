@@ -5,6 +5,7 @@ class AlumnoForm(forms.ModelForm):
     class Meta:
         model  = Alumno
         fields = [
+            'carnet',
             'first_name',
             'last_name',
             'email',
@@ -17,6 +18,10 @@ class AlumnoForm(forms.ModelForm):
         # enrolled_at → auto_now_add=True, no se incluye
 
         widgets = {
+            'carnet': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Carnet'
+            }),
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Nombre'

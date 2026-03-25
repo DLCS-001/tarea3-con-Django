@@ -28,8 +28,8 @@
         <table class="table table-borderless align-middle mb-0">
 
             <tr>
-                <th style="width:200px;">ID</th>
-                <td>{{ alumno.id }}</td>
+                <th style="width:200px;">Carnet</th>
+                <td>{{ alumno.carnet }}</td>
             </tr>
 
             <tr>
@@ -60,15 +60,7 @@
 
             <tr>
                 <th>Género</th>
-                <td>
-                    {% if alumno.gender == "M" %}
-                        Masculino
-                    {% elif alumno.gender == "F" %}
-                        Femenino
-                    {% else %}
-                        {{ alumno.gender }}
-                    {% endif %}
-                </td>
+                <td>{{ alumno.get_gender_display }}</td>
             </tr>
 
             <tr>

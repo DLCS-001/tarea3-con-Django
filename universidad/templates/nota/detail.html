@@ -30,7 +30,7 @@
                             <label class="fw-bold text-muted small">ALUMNO</label>
                             <p class="h5">{{ nota.alumno.first_name }} {{ nota.alumno.last_name }}</p>
                             <p class="text-muted mb-0">{{ nota.alumno.email }}</p>
-                            <p class="text-muted">{{ nota.alumno.carnet }}</p>
+                            <p class="text-muted">Carnet: {{ nota.alumno.carnet }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="fw-bold text-muted small">CURSO</label>
@@ -46,9 +46,9 @@
                         <div class="col-md-3 text-center mb-3">
                             <div class="card bg-light">
                                 <div class="card-body">
-                                    <h6 class="text-muted">Nota 1</h6>
-                                    <h3 class="mb-0 {% if nota.nota1 and nota.nota1 >= 60 %}text-success{% else %}text-danger{% endif %}">
-                                        {{ nota.nota1|default:"—" }}
+                                    <h6 class="text-muted">Parcial 1</h6>
+                                    <h3 class="mb-0 text-primary">
+                                        {{ nota.nota1|default_if_none:"—" }}{% if nota.nota1 != None %} / 15{% endif %}
                                     </h3>
                                 </div>
                             </div>
@@ -57,8 +57,8 @@
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <h6 class="text-muted">Nota 2</h6>
-                                    <h3 class="mb-0 {% if nota.nota2 and nota.nota2 >= 60 %}text-success{% else %}text-danger{% endif %}">
-                                        {{ nota.nota2|default:"—" }}
+                                    <h3 class="mb-0 text-primary">
+                                        {{ nota.nota2|default_if_none:"—" }}{% if nota.nota2 != None %} / 15{% endif %}
                                     </h3>
                                 </div>
                             </div>
@@ -66,9 +66,9 @@
                         <div class="col-md-3 text-center mb-3">
                             <div class="card bg-light">
                                 <div class="card-body">
-                                    <h6 class="text-muted">Nota 3</h6>
-                                    <h3 class="mb-0 {% if nota.nota3 and nota.nota3 >= 60 %}text-success{% else %}text-danger{% endif %}">
-                                        {{ nota.nota3|default:"—" }}
+                                    <h6 class="text-muted">Zona de tareas</h6>
+                                    <h3 class="mb-0 text-info">
+                                        {{ nota.nota3|default_if_none:"—" }}{% if nota.nota3 != None %} / 35{% endif %}
                                     </h3>
                                 </div>
                             </div>
@@ -77,8 +77,8 @@
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <h6 class="text-muted">Examen Final</h6>
-                                    <h3 class="mb-0 {% if nota.examen_final and nota.examen_final >= 60 %}text-success{% else %}text-danger{% endif %}">
-                                        {{ nota.examen_final|default:"—" }}
+                                    <h3 class="mb-0 text-warning">
+                                        {{ nota.examen_final|default_if_none:"—" }}{% if nota.examen_final != None %} / 35{% endif %}
                                     </h3>
                                 </div>
                             </div>
@@ -89,9 +89,9 @@
                         <div class="col-md-6 text-center">
                             <div class="card bg-primary text-white">
                                 <div class="card-body">
-                                    <h6 class="text-white-50">Zona</h6>
-                                    <h2 class="mb-0">{{ nota.zona|default:"—" }}</h2>
-                                    <small>Promedio de calificaciones parciales</small>
+                                    <h6 class="text-white-50">Total Zona</h6>
+                                    <h2 class="mb-0">{{ nota.zona|default_if_none:"—" }}</h2>
+                                    <small>Parcial 1 + Parcial 2 + Zona de tareas</small>
                                 </div>
                             </div>
                         </div>
@@ -99,9 +99,9 @@
                             <div class="card {% if nota.nota_final and nota.nota_final >= 61 %}bg-success{% elif nota.nota_final and nota.nota_final >= 51 %}bg-warning{% else %}bg-danger{% endif %} text-white">
                                 <div class="card-body">
                                     <h6 class="text-white-50">Calificación Final</h6>
-                                    <h2 class="mb-0">{{ nota.nota_final|default:"—" }}</h2>
+                                    <h2 class="mb-0">{{ nota.nota_final|default_if_none:"—" }}</h2>
                                     <small>
-                                        {% if nota.nota_final %}
+                                        {% if nota.nota_final != None %}
                                             {% if nota.nota_final >= 61 %}
                                                 Aprobado
                                             {% elif nota.nota_final >= 51 %}

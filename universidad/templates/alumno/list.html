@@ -15,7 +15,7 @@
                    name="q"
                    value="{{ query }}"
                    class="form-control me-2"
-                   placeholder="Buscar alumno por nombre o email...">
+                   placeholder="Buscar alumno por carnet, nombre o email...">
 
             <button class="btn btn-outline-primary">
                 <i class="bi bi-search"></i>
@@ -35,7 +35,7 @@
 
             <thead class="table-light">
                 <tr>
-                    <th>ID</th>
+                    <th>Carnet</th>
                     <th>Alumno</th>
                     <th>Email</th>
                     <th>Teléfono</th>
@@ -52,7 +52,7 @@
 
                 <tr>
 
-                    <td>{{ alumno.id }}</td>
+                    <td>{{ alumno.carnet }}</td>
 
                     <td>
                         <strong>{{ alumno.first_name }} {{ alumno.last_name }}</strong>
@@ -68,15 +68,7 @@
                         {% endif %}
                     </td>
 
-                    <td>
-                        {% if alumno.gender == "M" %}
-                            Masculino
-                        {% elif alumno.gender == "F" %}
-                            Femenino
-                        {% else %}
-                            {{ alumno.gender }}
-                        {% endif %}
-                    </td>
+                    <td>{{ alumno.get_gender_display }}</td>
 
                     <td>{{ alumno.birth_date }}</td>
 

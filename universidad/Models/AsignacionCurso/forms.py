@@ -1,7 +1,5 @@
 from django import forms
 from .models import AsignacionCurso
-from universidad.Models.Curso.models import Curso
-from universidad.Models.Catedratico.models import Catedratico
 import datetime
 
 
@@ -52,12 +50,15 @@ class AsignacionCursoForm(forms.ModelForm):
 
         if curso and anio and semestre and seccion:
             # Verificar si ya existe una asignación para este curso en el mismo período
-            if AsignacionCurso.objects.filter(
-                    curso=curso,
-                    anio=anio,
-                    semestre=semestre,
-                    seccion=seccion
-            ).exists():
+            existing = AsignacionCurso.objects.filter(
+                curso=curso,
+                anio=anio,
+                semestre=semestre,
+                seccion=seccion,
+            )
+            if self.instance.pk:
+                existing = existing.exclude(pk=self.instance.pk)
+            if existing.exists():
                 raise forms.ValidationError(
                     f"Ya existe una asignación para el curso {curso.nombre} "
                     f"en el {semestre}° semestre de {anio}, sección {seccion}."

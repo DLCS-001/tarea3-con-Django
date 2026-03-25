@@ -19,40 +19,59 @@
         <form method="post">
             {% csrf_token %}
 
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Carnet -->
+            <div class="mb-3">
+                <label class="form-label">Carnet</label>
+                {{ form.carnet }}
+                {% if form.carnet.errors %}<div class="text-danger small">{{ form.carnet.errors }}</div>{% endif %}
+            </div>
+
             <!-- Nombre -->
             <div class="mb-3">
                 <label class="form-label">Nombre</label>
                 {{ form.first_name }}
+                {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.errors }}</div>{% endif %}
             </div>
 
             <!-- Apellido -->
             <div class="mb-3">
                 <label class="form-label">Apellido</label>
                 {{ form.last_name }}
+                {% if form.last_name.errors %}<div class="text-danger small">{{ form.last_name.errors }}</div>{% endif %}
             </div>
 
             <!-- Email -->
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 {{ form.email }}
+                {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors }}</div>{% endif %}
             </div>
 
             <!-- Teléfono -->
             <div class="mb-3">
                 <label class="form-label">Teléfono</label>
                 {{ form.phone }}
+                {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors }}</div>{% endif %}
             </div>
 
             <!-- Género -->
             <div class="mb-3">
                 <label class="form-label">Género</label>
                 {{ form.gender }}
+                {% if form.gender.errors %}<div class="text-danger small">{{ form.gender.errors }}</div>{% endif %}
             </div>
 
             <!-- Fecha nacimiento -->
             <div class="mb-3">
                 <label class="form-label">Fecha de Nacimiento</label>
                 {{ form.birth_date }}
+                {% if form.birth_date.errors %}<div class="text-danger small">{{ form.birth_date.errors }}</div>{% endif %}
             </div>
 
             <!-- Activo -->
@@ -61,6 +80,7 @@
                 <label class="form-check-label">
                     Alumno activo
                 </label>
+                {% if form.is_active.errors %}<div class="text-danger small">{{ form.is_active.errors }}</div>{% endif %}
             </div>
 
             <!-- Botones -->

@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.db import models
 from .models import Alumno
 from .forms import AlumnoForm
 
@@ -9,9 +9,12 @@ def alumno_list(request):
     alumnos = Alumno.objects.all()
 
     if query:
-        alumnos = alumnos.filter(first_name__icontains=query) \
-                | alumnos.filter(last_name__icontains=query)  \
-                | alumnos.filter(email__icontains=query)
+        alumnos = alumnos.filter(
+            models.Q(carnet__icontains=query) |
+            models.Q(first_name__icontains=query) |
+            models.Q(last_name__icontains=query) |
+            models.Q(email__icontains=query)
+        )
 
     return render(request, 'alumno/list.html', {
         'alumnos': alumnos,

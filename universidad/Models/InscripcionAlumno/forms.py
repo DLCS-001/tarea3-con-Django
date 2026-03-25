@@ -1,7 +1,5 @@
 from django import forms
 from .models import InscripcionAlumno
-from universidad.Models.Alumno.models import Alumno
-from universidad.Models.Curso.models import Curso
 import datetime
 
 
@@ -50,12 +48,15 @@ class InscripcionAlumnoForm(forms.ModelForm):
 
         if alumno and curso and anio and semestre:
             # Verificar si ya existe una inscripción para este alumno en el mismo período
-            if InscripcionAlumno.objects.filter(
-                    alumno=alumno,
-                    curso=curso,
-                    anio=anio,
-                    semestre=semestre
-            ).exists():
+            existing = InscripcionAlumno.objects.filter(
+                alumno=alumno,
+                curso=curso,
+                anio=anio,
+                semestre=semestre,
+            )
+            if self.instance.pk:
+                existing = existing.exclude(pk=self.instance.pk)
+            if existing.exists():
                 raise forms.ValidationError(
                     f"El alumno {alumno} ya está inscrito en el curso {curso} "
                     f"para el {semestre}° semestre de {anio}."

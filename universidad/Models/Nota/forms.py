@@ -1,8 +1,5 @@
 from django import forms
 from .models import Nota
-from universidad.Models.Alumno.models import Alumno
-from universidad.Models.Curso.models import Curso
-
 
 class NotaForm(forms.ModelForm):
     class Meta:
@@ -21,29 +18,29 @@ class NotaForm(forms.ModelForm):
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'max': '100',
-                'placeholder': '0 - 100'
+                'max': str(Nota.PARCIAL_1_MAXIMO),
+                'placeholder': f'0 - {Nota.PARCIAL_1_MAXIMO}'
             }),
             'nota2': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'max': '100',
-                'placeholder': '0 - 100'
+                'max': str(Nota.PARCIAL_2_MAXIMO),
+                'placeholder': f'0 - {Nota.PARCIAL_2_MAXIMO}'
             }),
             'nota3': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'max': '100',
-                'placeholder': '0 - 100'
+                'max': str(Nota.ZONA_MAXIMA),
+                'placeholder': f'0 - {Nota.ZONA_MAXIMA}'
             }),
             'examen_final': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'max': '100',
-                'placeholder': '0 - 100'
+                'max': str(Nota.EXAMEN_FINAL_MAXIMO),
+                'placeholder': f'0 - {Nota.EXAMEN_FINAL_MAXIMO}'
             }),
         }
 
@@ -56,5 +53,16 @@ class NotaForm(forms.ModelForm):
         # Validar que al menos una nota esté ingresada
         if nota1 is None and nota2 is None and nota3 is None:
             raise forms.ValidationError("Debe ingresar al menos una calificación parcial.")
+
+        limites = {
+            'nota1': Nota.PARCIAL_1_MAXIMO,
+            'nota2': Nota.PARCIAL_2_MAXIMO,
+            'nota3': Nota.ZONA_MAXIMA,
+            'examen_final': Nota.EXAMEN_FINAL_MAXIMO,
+        }
+        for field_name, limite in limites.items():
+            value = cleaned_data.get(field_name)
+            if value is not None and not 0 <= value <= limite:
+                self.add_error(field_name, f"La calificación debe estar entre 0 y {limite}.")
 
         return cleaned_data
