@@ -30,4 +30,5 @@ path('cursos/', include('universidad.Models.Curso.urls')),
 path('catedraticos/', include('universidad.Models.Catedratico.urls')),
 path('notas/', include('universidad.Models.Nota.urls')),
 path('asignaciones/', include('universidad.Models.AsignacionCurso.urls')),
+path('inscripciones/', include('universidad.Models.InscripcionAlumno.urls')),
 ]

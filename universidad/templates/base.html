@@ -198,6 +198,11 @@
     <i class="bi bi-calendar-check-fill"></i> Asignación de Cursos
 </a>
 
+<a href="{% url 'inscripcionalumno:list' %}"
+   class="nav-link {% if request.resolver_match.namespace == 'inscripcionalumno' %}active{% endif %}">
+    <i class="bi bi-person-plus-fill"></i> Inscripciones
+</a>
+
 <a href="{% url 'catedratico:list' %}" class="nav-link {% if request.resolver_match.namespace == 'catedratico' %}active{% endif %}">
     <i class="bi bi-person-badge-fill"></i> Catedráticos
 </a>
