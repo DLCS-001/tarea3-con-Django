@@ -1,0 +1,14 @@
+# Poblar con valores por defecto (10,000 alumnos, 50 catedráticos, 50 cursos)
+python poblar_db.py
+
+# Limpiar datos existentes primero
+python poblar_db.py --clear
+
+# Poblar con 5,000 alumnos
+python poblar_db.py --alumnos 5000
+
+# Poblar con más catedráticos y cursos
+python poblar_db.py --catedraticos 100 --cursos 100 --alumnos 15000
+
+# Ver ayuda
+python poblar_db.py --help
